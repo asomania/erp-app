@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, SignInButton, useAuth } from "@clerk/clerk-react";
+import { SignedOut, SignInButton, useAuth } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 export default function App() {
@@ -16,7 +16,6 @@ export default function App() {
       <SignedOut>
         <SignInButton />
       </SignedOut>
-      <SignedIn></SignedIn>
     </header>
   );
 }

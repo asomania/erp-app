@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./componets/Dasboard.tsx";
+import Dashboard from "./components/ui/Dasboard.tsx";
 
 // Import your publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
