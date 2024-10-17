@@ -5,6 +5,7 @@ function getData(): Products[] {
   return [
     {
       id: "1",
+      text: "test",
       date: new Date(),
       imei: "1234567890",
       price: 100,
