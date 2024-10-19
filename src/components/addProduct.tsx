@@ -28,16 +28,44 @@ const AddProduct = () => {
           </SheetHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Ürün Adı
+              <Label htmlFor="brand" className="text-right">
+                Ürün markası
               </Label>
-              <Input id="name" value="Pedro Duarte" className="col-span-3" />
+              <Input id="brand" value="Pedro Duarte" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Ürün Fiyatı
+              <Label htmlFor="model" className="text-right">
+                Ürün Modeli
               </Label>
-              <Input id="username" value="@peduarte" className="col-span-3" />
+              <Input id="model" value="Pedro Duarte" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="gb" className="text-right">
+                Ürün Gb
+              </Label>
+              <Input id="gb" value="Pedro Duarte" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="battery" className="text-right">
+                Ürün Batarya
+              </Label>
+              <Input id="battery" value="Pedro Duarte" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="pricePurchase" className="text-right">
+                Ürün Alış Fiyatı
+              </Label>
+              <Input
+                id="pricePurchase"
+                value="@peduarte"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="priceSale" className="text-right">
+                Ürün Satış Fiyatı
+              </Label>
+              <Input id="priceSale" value="@peduarte" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="imei" className="text-right">

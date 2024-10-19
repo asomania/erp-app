@@ -5,11 +5,27 @@ function getData(): Products[] {
   return [
     {
       id: "1",
-      text: "test",
-      date: new Date(),
+      brand: "apple",
+      model: "iphone 12",
+      gb: 100,
+      battery: 100,
+      fromWhom: "test",
       imei: "1234567890",
-      price: 100,
-      fromWhom: "John Doe",
+      pricePurchase: 100,
+      priceSale: 100,
+      date: new Date(),
+    },
+    {
+      id: "1",
+      model: "iphone 12",
+      brand: "apple",
+      gb: 100,
+      battery: 100,
+      fromWhom: "test",
+      imei: "1234567890",
+      pricePurchase: 100,
+      priceSale: 100,
+      date: new Date(),
     },
   ];
 }
