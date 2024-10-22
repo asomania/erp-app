@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-    use App\Models\Device;
-    use Illuminate\Http\Request;
+use App\Models\Device;
+use Illuminate\Http\Request;
 
 class DeviceController extends Controller
 {
-
     /**
      * Display a listing of the devices.
      *
@@ -16,9 +15,8 @@ class DeviceController extends Controller
     public function index()
     {
         $devices = Device::all();
-        // Log devices to console for debugging
         \Log::info('Devices:', $devices->toArray());
-         return response()->json($devices);
+        return response()->json($devices);
     }
 
     /**
@@ -29,7 +27,17 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
-        $device = Device::create($request->all());
+        $device = Device::create($request->validate([
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'gb' => 'required|integer',
+            'battery' => 'required|integer',
+            'imei' => 'required|string|unique:devices',
+            'purchase_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
+            'from_whom' => 'nullable|string|max:255'
+        ]));
+        
         return response()->json($device, 201);
     }
 
@@ -55,7 +63,18 @@ class DeviceController extends Controller
     public function update(Request $request, $id)
     {
         $device = Device::findOrFail($id);
-        $device->update($request->all());
+        
+        $device->update($request->validate([
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'gb' => 'required|integer',
+            'battery' => 'required|integer',
+            'imei' => 'required|string|unique:devices,imei,'.$id,
+            'purchase_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
+            'from_whom' => 'nullable|string|max:255'
+        ]));
+
         return response()->json($device);
     }
 
