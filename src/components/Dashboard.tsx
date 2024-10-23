@@ -7,7 +7,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard p-4 flex flex-col">
       <div className="flex justify-between">
-        <img src="logo.jpeg" alt="images" className="w-20 h-20" />
+        <img src="logo.png" alt="images" className="w-20 h-20" />
         <ModeToggle />
       </div>
       <div className="flex flex-col px-20">

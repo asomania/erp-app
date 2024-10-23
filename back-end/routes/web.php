@@ -1,10 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\ProductsController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/devices', [DeviceController::class, 'index']);
+

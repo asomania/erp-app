@@ -6,54 +6,36 @@ import { ColumnDef } from "@tanstack/react-table";
 // You can use a Zod schema here if you want.
 export type Products = {
   id: string;
-  brand: string;
-  model: string;
-  date: Date;
-  imei: string;
-  gb: number;
-  battery: number;
+  name: string;
+  prodDate: Date;
   pricePurchase: number;
   priceSale: number;
-  fromWhom: string;
+  count: number;
 };
 
 export const columns: ColumnDef<Products>[] = [
   {
-    accessorKey: "brand",
-    header: "Brand",
+    accessorKey: "id",
+    header: "ID",
   },
   {
-    accessorKey: "model",
-    header: "Model",
-  },
-
-  {
-    accessorKey: "gb",
-    header: "GB",
-  },
-
-  {
-    accessorKey: "battery",
-    header: "Battery",
+    accessorKey: "name",
+    header: "Name",
   },
   {
-    accessorKey: "imei",
-    header: "IMEI",
+    accessorKey: "prodDate",
+    header: "Production Date",
   },
   {
     accessorKey: "pricePurchase",
-    header: "Alış Fiyatı",
+    header: "Purchase Price",
   },
   {
     accessorKey: "priceSale",
-    header: "Satış Fiyatı",
+    header: "Sale Price",
   },
   {
-    accessorKey: "date",
-    header: "Date",
-  },
-  {
-    accessorKey: "fromWhom",
-    header: "From Whom",
+    accessorKey: "count",
+    header: "Count",
   },
 ];

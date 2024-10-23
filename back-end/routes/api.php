@@ -1,8 +1,13 @@
 <?php
 
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\ProductsController;
 
-
-Route::get('/devices', [DeviceController::class, 'index']);
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductsController::class, 'index']);
+    Route::post('/', [ProductsController::class, 'store']);
+    Route::get('/{id}', [ProductsController::class, 'show']);
+    Route::put('/{id}', [ProductsController::class, 'update']);
+    Route::delete('/{id}', [ProductsController::class, 'destroy']);
+});

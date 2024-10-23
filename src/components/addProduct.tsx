@@ -1,5 +1,6 @@
 "use client";
-
+import { useState } from "react";
+import api from "../api/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,8 +14,48 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+interface ProductData {
+  name: string;
+  pricePurchase: number;
+  priceSale: number;
+  prodDate: string;
+  count: number;
+}
 
 const AddProduct = () => {
+  const [productData, setProductData] = useState<ProductData>({
+    name: "",
+    pricePurchase: 0,
+    prodDate: new Date().toISOString().split("T")[0],
+    priceSale: 0,
+    count: 0,
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProductData((prevData) => ({
+      ...prevData,
+      [name]: name === "name" ? value : Number(value),
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await api.post("/products", productData);
+      console.log("Product added successfully:", response.data);
+      setProductData({
+        name: "",
+        pricePurchase: 0,
+        priceSale: 0,
+        prodDate: new Date().toISOString().split("T")[0],
+        count: 0,
+      });
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  };
+
   return (
     <div className="gap-2 flex justify-end px-24">
       <Sheet>
@@ -26,65 +67,79 @@ const AddProduct = () => {
             <SheetTitle>Ürün Ekle</SheetTitle>
             <SheetDescription>Ürün bilgilerini giriniz.</SheetDescription>
           </SheetHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="brand" className="text-right">
-                Ürün markası
-              </Label>
-              <Input id="brand" value="Pedro Duarte" className="col-span-3" />
+          <form onSubmit={handleSubmit}>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Ürün adi
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  value={productData.name}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="pricePurchase" className="text-right">
+                  Ürün Alış Fiyatı
+                </Label>
+                <Input
+                  id="pricePurchase"
+                  name="pricePurchase"
+                  type="number"
+                  value={productData.pricePurchase}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="priceSale" className="text-right">
+                  Ürün Satış Fiyatı
+                </Label>
+                <Input
+                  id="priceSale"
+                  name="priceSale"
+                  type="number"
+                  value={productData.priceSale}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="count" className="text-right">
+                  Adet
+                </Label>
+                <Input
+                  id="count"
+                  name="count"
+                  type="number"
+                  value={productData.count}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="model" className="text-right">
-                Ürün Modeli
-              </Label>
-              <Input id="model" value="Pedro Duarte" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="gb" className="text-right">
-                Ürün Gb
-              </Label>
-              <Input id="gb" value="Pedro Duarte" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="battery" className="text-right">
-                Ürün Batarya
-              </Label>
-              <Input id="battery" value="Pedro Duarte" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="pricePurchase" className="text-right">
-                Ürün Alış Fiyatı
+              <Label htmlFor="proddate" className="text-right">
+                Üretim Tarihi
               </Label>
               <Input
-                id="pricePurchase"
-                value="@peduarte"
+                id="proddate"
+                name="proddate"
+                type="date"
+                value={productData.prodDate}
+                onChange={handleInputChange}
                 className="col-span-3"
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="priceSale" className="text-right">
-                Ürün Satış Fiyatı
-              </Label>
-              <Input id="priceSale" value="@peduarte" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="imei" className="text-right">
-                IMEI
-              </Label>
-              <Input id="imei" value="@1232131" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fromWhom" className="text-right">
-                Kimden
-              </Label>
-              <Input id="fromWhom" value="@peduarte" className="col-span-3" />
-            </div>
-          </div>
-          <SheetFooter>
-            <SheetClose asChild>
-              <Button type="submit">Ürün Ekle</Button>
-            </SheetClose>
-          </SheetFooter>
+            <SheetFooter>
+              <SheetClose asChild>
+                <Button type="submit">Ürün Ekle</Button>
+              </SheetClose>
+            </SheetFooter>
+          </form>
         </SheetContent>
       </Sheet>
     </div>
