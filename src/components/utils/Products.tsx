@@ -29,7 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
           <div className="flex flex-col space-y-1.5">
             <Label>Üretim Tarihi:</Label>
-            <p>{product.prodDate}</p>
+            <p>{new Date(product.prodDate).toLocaleDateString()}</p>
           </div>
           <div className="flex flex-col space-y-1.5">
             <Label>Alış Fiyatı:</Label>
