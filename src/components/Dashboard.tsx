@@ -17,6 +17,7 @@ const Dashboard: React.FC = () => {
           {" "}
           <DatePicker />
           <DropdownMenuRadioGroupDemo
+            defaultValue="all"
             label="Model sec"
             buttonText="Model"
             options={[
