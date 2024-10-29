@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Products, columns } from "./utils/columns";
 import { DataTable } from "./utils/dataTable";
 import api from "../api/index";
-import { ProductCard } from "./utils/Products";
+//import { ProductCard } from "./utils/Products";
 
 const TableComponent = () => {
   const [prodData, setProdData] = useState<Products[]>([]);
@@ -36,11 +36,13 @@ const TableComponent = () => {
   return (
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={prodData} />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-        {prodData.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {
+        //<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+        //{prodData.map((product) => (
+        //<ProductCard key={product.id} product={product} />
+        //))}
+        //</div>
+      }
     </div>
   );
 };

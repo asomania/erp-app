@@ -23,25 +23,30 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardHeader>
       <CardContent>
         <div className="grid w-full items-center gap-4">
-          <div className="flex flex-col space-y-1.5">
-            <Label>Ürün ID:</Label>
-            <p>{product.id}</p>
+          <div className="flex flex-row gap-6">
+            {" "}
+            <div className="flex flex-col space-y-1.5">
+              <Label>Ürün ID:</Label>
+              <p>{product.id}</p>
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label>Üretim Tarihi:</Label>
+              <p>{new Date(product.prodDate).toLocaleDateString()}</p>
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label>Alış Fiyatı:</Label>
+              <p>{product.pricePurchase} TL</p>
+            </div>
           </div>
-          <div className="flex flex-col space-y-1.5">
-            <Label>Üretim Tarihi:</Label>
-            <p>{new Date(product.prodDate).toLocaleDateString()}</p>
-          </div>
-          <div className="flex flex-col space-y-1.5">
-            <Label>Alış Fiyatı:</Label>
-            <p>{product.pricePurchase} TL</p>
-          </div>
-          <div className="flex flex-col space-y-1.5">
-            <Label>Satış Fiyatı:</Label>
-            <p>{product.priceSale} TL</p>
-          </div>
-          <div className="flex flex-col space-y-1.5">
-            <Label>Stok Adedi:</Label>
-            <p>{product.count}</p>
+          <div className="flex flex-row gap-6">
+            <div className="flex flex-col space-y-1.5">
+              <Label>Satış Fiyatı:</Label>
+              <p>{product.priceSale} TL</p>
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label>Stok Adedi:</Label>
+              <p>{product.count}</p>
+            </div>
           </div>
         </div>
       </CardContent>
