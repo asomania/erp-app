@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import TableComponent from "./table";
 import AddProduct from "./addProduct";
 import DatePicker from "./datePicker";
 import { ModeToggle } from "./toogleTheme";
 import { DropdownMenuRadioGroupDemo } from "./dropdown";
+import { Button } from "@/components/ui/button";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import api from "../api";
+
 const Dashboard: React.FC = () => {
+  const [model, setModel] = useState("");
+  const [date, setDate] = useState<string | null>(null);
+
+  const handleDataFromChild = (childData: string) => {
+    setDate(childData);
+  };
+  const handleSearch = () => {
+    return new Promise((resolve, reject) => {
+      api
+        .get(`/products?startDate=${date.from}&endDate=${date.to}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
   return (
     <div className="dashboard p-4 flex flex-col">
       <div className="flex justify-between">
@@ -15,7 +37,7 @@ const Dashboard: React.FC = () => {
         <AddProduct />
         <div className="flex flex-row gap-6">
           {" "}
-          <DatePicker />
+          <DatePicker sendDateToParent={handleDataFromChild} />
           <DropdownMenuRadioGroupDemo
             defaultValue="all"
             label="Model sec"
@@ -28,8 +50,32 @@ const Dashboard: React.FC = () => {
                 label: "Android",
               },
             ]}
+            onValueChange={(value) => setModel(value)}
+          />
+          <DropdownMenuRadioGroupDemo
+            defaultValue="all"
+            label="Durum sec"
+            buttonText="Durum"
+            options={[
+              { value: "all", label: "Hepsi" },
+              { value: "new", label: "Sıfır" },
+              {
+                value: "secondHand",
+                label: "İkinci el",
+              },
+            ]}
             onValueChange={(value) => console.log(value)}
           />
+          <Button
+            variant="outline"
+            className="w-[100px]"
+            onClick={() => {
+              handleSearch();
+            }}
+          >
+            <MagnifyingGlassIcon className="mr-2 h-4 w-4" />
+            Search
+          </Button>
         </div>
 
         <TableComponent />

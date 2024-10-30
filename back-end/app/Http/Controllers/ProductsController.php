@@ -20,6 +20,18 @@ class ProductsController extends Controller
         $products = Products::all();
         return response()->json($products);
     }
+    public function getDataByDate(Request $request)
+    {
+        // Başlangıç ve bitiş tarihlerini istekte alıyoruz
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Verileri belirli tarihler arasında getiriyoruz
+        $data = Products::whereBetween('created_at', [$startDate, $endDate])->get();
+
+        // Sonuçları JSON olarak döndür
+        return response()->json($data);
+    }
 
     /**
      * Store a newly created product in storage.
