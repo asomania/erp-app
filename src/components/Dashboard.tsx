@@ -7,18 +7,29 @@ import { DropdownMenuRadioGroupDemo } from "./dropdown";
 import { Button } from "@/components/ui/button";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import api from "../api";
+import { DateRange } from "react-day-picker";
 
 const Dashboard: React.FC = () => {
   const [model, setModel] = useState("");
-  const [date, setDate] = useState<string | null>(null);
+  const [date, setDate] = useState<DateRange>({
+    from: new Date(),
+    to: new Date(),
+  });
 
-  const handleDataFromChild = (childData: string) => {
-    setDate(childData);
+  const handleDataFromChild = (childData: DateRange | undefined): void => {
+    if (childData) {
+      setDate(childData);
+    }
   };
   const handleSearch = () => {
+    console.log(model);
     return new Promise((resolve, reject) => {
       api
-        .get(`/products?startDate=${date.from}&endDate=${date.to}`)
+        .get(
+          `/products?start_date=${
+            date.from?.toISOString().split("T")[0]
+          }&end_date=${date.to?.toISOString().split("T")[0]}`
+        )
         .then((response) => {
           resolve(response.data);
         })

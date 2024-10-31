@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Products;
 use Illuminate\Http\Response;
 
+
 class ProductsController extends Controller
 {
    
@@ -21,17 +22,22 @@ class ProductsController extends Controller
         return response()->json($products);
     }
     public function getDataByDate(Request $request)
-    {
-        // Başlangıç ve bitiş tarihlerini istekte alıyoruz
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+{
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
 
-        // Verileri belirli tarihler arasında getiriyoruz
-        $data = Products::whereBetween('created_at', [$startDate, $endDate])->get();
+    
+    Log::info('Start Date: ' . $startDate);
+    Log::info('End Date: ' . $endDate);
 
-        // Sonuçları JSON olarak döndür
-        return response()->json($data);
-    }
+    $data = Products::whereDate('prodDate', '>=', $startDate)
+                    ->whereDate('prodDate', '<=', $endDate)
+                    ->get();
+
+    return response()->json($data);
+}
+
+
 
     /**
      * Store a newly created product in storage.
