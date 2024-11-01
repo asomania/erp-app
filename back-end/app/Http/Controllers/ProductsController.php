@@ -21,23 +21,22 @@ class ProductsController extends Controller
         $products = Products::all();
         return response()->json($products);
     }
+
     public function getDataByDate(Request $request)
-{
-    $startDate = $request->input('start_date');
-    $endDate = $request->input('end_date');
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        if(empty($startDate) || empty($endDate)) {
+            return response()->json($products);
+        }
     
-    Log::info('Start Date: ' . $startDate);
-    Log::info('End Date: ' . $endDate);
+        return response()->json( Products::whereBetween('prodDate', [$startDate, $endDate])
+        ->get());
+    
 
-    $data = Products::whereDate('prodDate', '>=', $startDate)
-                    ->whereDate('prodDate', '<=', $endDate)
-                    ->get();
-
-    return response()->json($data);
-}
-
-
+        
+    }
 
     /**
      * Store a newly created product in storage.

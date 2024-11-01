@@ -4,6 +4,7 @@ import api from "../api/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Products } from "./utils/columns";
 import {
   Sheet,
   SheetClose,
@@ -22,7 +23,11 @@ interface ProductData {
   count: number;
 }
 
-const AddProduct = () => {
+const AddProduct = ({
+  dataMethod,
+}: {
+  dataMethod: () => Promise<Products[]>;
+}) => {
   const [productData, setProductData] = useState<ProductData>({
     name: "",
     pricePurchase: 0,
@@ -51,6 +56,7 @@ const AddProduct = () => {
         prodDate: new Date().toISOString().split("T")[0],
         count: 0,
       });
+      dataMethod();
     } catch (error) {
       console.error("Error adding product:", error);
     }
