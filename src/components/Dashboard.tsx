@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import TableComponent from "./table";
 import AddProduct from "./addProduct";
 import DatePicker from "./datePicker";
@@ -17,70 +17,55 @@ const Dashboard: React.FC = () => {
     from: new Date(),
     to: new Date(),
   });
-  const [err, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleDataFromChild = (childData: DateRange | undefined): void => {
-    if (childData) {
-      setDate(childData);
+  const updateDate = (childData: DateRange | undefined) => {
+    if (childData) setDate(childData);
+  };
+
+  const handleSearch = useCallback(async () => {
+    try {
+      const { data } = await api.get(
+        `/products?start_date=${
+          date.from?.toISOString().split("T")[0]
+        }&end_date=${date.to?.toISOString().split("T")[0]}`
+      );
+      setDatas(data);
+    } catch (error) {
+      setError("Bir hata oluştu.");
+      console.error(error);
     }
-  };
-  const handleSearch = (): Promise<Products[]> => {
-    console.log(model);
-    console.log(date);
-    console.log("deneme");
-    return new Promise((resolve, reject) => {
-      console.log(typeof date.from?.toISOString().split("T")[0]);
-      api
-        .get(
-          `/products?start_date=${
-            date.from?.toISOString().split("T")[0]
-          }&end_date=${date.to?.toISOString().split("T")[0]}`
-        )
-        .then((response) => {
-          resolve(response.data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  };
+  }, [date, model, error]);
+
   useEffect(() => {
-    handleSearch()
-      .then((data) => {
-        console.log("worked");
-        setDatas(data); // API’den dönen veriyi state’e atıyoruz
-      })
-      .catch(() => {
-        setError("Bir hata oluştu.");
-        console.log(err);
-      });
-  }, []); // Dependency array boş bırakılarak component ilk yüklendiğinde çağırılır.
+    handleSearch();
+  }, [handleSearch]);
 
   return (
     <div className="dashboard p-4 flex flex-col">
       <div className="flex justify-between">
-        <img src="logo.png" alt="images" className="w-20 h-20" />
+        <img src="logo.png" alt="Logo" className="w-20 h-20" />
         <ModeToggle />
       </div>
-      <div className="flex flex-col px-20">
+
+      <div className="flex flex-col px-20 gap-6">
         <AddProduct dataMethod={handleSearch} />
-        <div className="flex flex-row gap-6">
-          {" "}
-          <DatePicker sendDateToParent={handleDataFromChild} />
+
+        <div className="flex flex-row gap-6 items-center">
+          <DatePicker sendDateToParent={updateDate} />
+
           <DropdownMenuRadioGroupDemo
             defaultValue="all"
-            label="Model sec"
+            label="Model Seç"
             buttonText="Model"
             options={[
               { value: "all", label: "Hepsi" },
               { value: "iphone", label: "Iphone" },
-              {
-                value: "android",
-                label: "Android",
-              },
+              { value: "android", label: "Android" },
             ]}
-            onValueChange={(value) => setModel(value)}
+            onValueChange={setModel}
           />
+
           <DropdownMenuRadioGroupDemo
             defaultValue="all"
             label="Durum sec"
@@ -88,19 +73,15 @@ const Dashboard: React.FC = () => {
             options={[
               { value: "all", label: "Hepsi" },
               { value: "new", label: "Sıfır" },
-              {
-                value: "secondHand",
-                label: "İkinci el",
-              },
+              { value: "secondHand", label: "İkinci el" },
             ]}
             onValueChange={(value) => console.log(value)}
           />
+
           <Button
             variant="outline"
             className="w-[100px]"
-            onClick={() => {
-              handleSearch();
-            }}
+            onClick={handleSearch}
           >
             <MagnifyingGlassIcon className="mr-2 h-4 w-4" />
             Search

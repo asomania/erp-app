@@ -4,7 +4,6 @@ import api from "../api/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Products } from "./utils/columns";
 import {
   Sheet,
   SheetClose,
@@ -23,11 +22,7 @@ interface ProductData {
   count: number;
 }
 
-const AddProduct = ({
-  dataMethod,
-}: {
-  dataMethod: () => Promise<Products[]>;
-}) => {
+const AddProduct = ({ dataMethod }: { dataMethod: () => void }) => {
   const [productData, setProductData] = useState<ProductData>({
     name: "",
     pricePurchase: 0,
