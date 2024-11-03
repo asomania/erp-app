@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/backend-csharp/backend-csharp.csproj": {}
+    "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/ProductsAPI/ProductsAPI.csproj": {}
   },
   "projects": {
-    "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/backend-csharp/backend-csharp.csproj": {
+    "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/ProductsAPI/ProductsAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/backend-csharp/backend-csharp.csproj",
-        "projectName": "backend-csharp",
-        "projectPath": "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/backend-csharp/backend-csharp.csproj",
+        "projectUniqueName": "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/ProductsAPI/ProductsAPI.csproj",
+        "projectName": "ProductsAPI",
+        "projectPath": "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/ProductsAPI/ProductsAPI.csproj",
         "packagesPath": "/Users/erenkucuk/.nuget/packages/",
-        "outputPath": "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/backend-csharp/obj/",
+        "outputPath": "/Users/erenkucuk/Desktop/Projects/erp-full-stack-app/ProductsAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/erenkucuk/.nuget/NuGet/NuGet.Config"
@@ -42,6 +42,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
