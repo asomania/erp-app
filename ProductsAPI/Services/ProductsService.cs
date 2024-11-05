@@ -1,52 +1,50 @@
-using System;
-using ProductsAPI.Models;
 using System.Collections.Generic;
 using System.Linq;
+using ProductsAPI.Models;
+using ProductsAPI.Data;
 
 namespace ProductsAPI.Services
 {
     public class ProductsService
     {
-        static List<Products> ProductsList { get; }
-        static int nextId = 3;
+        private readonly ApplicationDbContext _context;
 
-        static ProductsService()
+        public ProductsService(ApplicationDbContext context)
         {
-            ProductsList = new List<Products>
-            {
-                new Products { Id = 1, Name = "Product1", prodDate = "2024-10-23", pricePurchase = 500, priceSale = 700, count = 10 },
-                new Products { Id = 2, Name = "Product2", prodDate = "2024-10-24", pricePurchase = 600, priceSale = 800, count = 15 }
-            };
+            _context = context;
         }
 
-        public static List<Products> GetProducts() => ProductsList;
+        public List<Products> GetProducts() => _context.Products.ToList();
 
-        public static Products? GetProduct(int id) => ProductsList.FirstOrDefault(x => x.Id == id);
+        public Products? GetProduct(int id) => _context.Products.FirstOrDefault(p => p.Id == id);
 
-        public static void AddProduct(Products product)
+        public void AddProduct(Products product)
         {
-            product.Id = nextId++;
-            ProductsList.Add(product);
+            _context.Products.Add(product);
+            _context.SaveChanges();
         }
 
-        public static void DeleteProduct(int id)
+        public void DeleteProduct(int id)
         {
             var product = GetProduct(id);
-            if (product is null)
-            {
-                return;
-            }
-            ProductsList.Remove(product);
+            if (product is null) return;
+            
+            _context.Products.Remove(product);
+            _context.SaveChanges();
         }
 
-        public static void UpdateProduct(Products product)
+        public void UpdateProduct(Products product)
         {
-            var index = ProductsList.FindIndex(p => p.Id == product.Id);
-            if (index == -1)
-            {
-                return;
-            }
-            ProductsList[index] = product;
+            var existingProduct = GetProduct(product.Id);
+            if (existingProduct is null) return;
+
+            existingProduct.Name = product.Name;
+            existingProduct.prodDate = product.prodDate;
+            existingProduct.pricePurchase = product.pricePurchase;
+            existingProduct.priceSale = product.priceSale;
+            existingProduct.count = product.count;
+            
+            _context.SaveChanges();
         }
     }
 }
