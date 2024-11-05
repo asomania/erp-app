@@ -16,24 +16,24 @@ namespace ProductsAPI.Controllers
               return ProductsService.GetProducts();
           }
           [HttpGet("id")]
-          puplic ActionResult<Product> GetProduct(int id){
+          public ActionResult<Products> GetProduct(int id){
             var prod = ProductsService.GetProduct(id);
             if (prod is null){
-              return NotFound()
+              return NotFound();
             }
             return prod;
           }
           [HttpPost]
-          public IActionResult AddProduct(Product prod){
+          public IActionResult AddProduct(Products prod){
             if(prod is null){
-              return NotFound
+              return NotFound();
             }
-            ProductsService.AddProduct(prod)
-            return Ok()
+            ProductsService.AddProduct(prod);
+            return Ok();
           }
-          [HttpUpdate]
-          public IActionResult UpdateProduct(int i, Product prod){
-            var product = ProductsService.GetProduct(id);
+          [HttpPut]
+          public IActionResult UpdateProduct(int i, Products prod){
+            var product = ProductsService.GetProduct(i);
             if(product is null)
               return NotFound();
              
@@ -43,7 +43,7 @@ namespace ProductsAPI.Controllers
           }
           [HttpDelete]
           public IActionResult DeleteProduct(int i){
-            var product = ProductsService.GetProduct(id);
+            var product = ProductsService.GetProduct(i);
             if(product is null)
               return NotFound();
              
