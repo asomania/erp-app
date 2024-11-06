@@ -42,7 +42,7 @@ const AddProduct = ({ dataMethod }: { dataMethod: () => void }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await api.post("/products", productData);
+      const response = await api.post("/product", productData);
       console.log("Product added successfully:", response.data);
       setProductData({
         name: "",

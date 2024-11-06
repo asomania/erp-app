@@ -9,6 +9,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
     new MySqlServerVersion(new Version(8, 0, 21)))); // MySQL sürümünü belirtin
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy => policy.WithOrigins("http://localhost:3000") // izin vermek istediğiniz etki alanını buraya yazın
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
+
 // Register ProductsService
 builder.Services.AddScoped<ProductsService>();
 
