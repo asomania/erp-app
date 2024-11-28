@@ -7,18 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add DbContext with the connection string
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
-    new MySqlServerVersion(new Version(8, 0, 21)))); // MySQL sürümünü belirtin
+    new MySqlServerVersion(new Version(8, 0, 21))));
 
 // Add CORS policy
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        policy => policy.WithOrigins("http://localhost:3000") // izin vermek istediğiniz etki alanını buraya yazın
+        policy => policy.WithOrigins("http://localhost:5173") 
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
 
-// Register ProductsService
 builder.Services.AddScoped<ProductsService>();
 
 builder.Services.AddControllers();
@@ -37,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 

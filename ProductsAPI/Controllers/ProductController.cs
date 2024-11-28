@@ -21,18 +21,18 @@ namespace ProductsAPI.Controllers
         [HttpGet]
         public ActionResult<List<Products>> GetProducts()
         {
-            var products = _productsService.GetProducts(); // ProductsService ile değiştirildi
+            var products = _productsService.GetProducts();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public ActionResult<Products> GetProduct(int id)
         {
-            var prod = _productsService.GetProduct(id); // ProductsService ile değiştirildi
+            var prod = _productsService.GetProduct(id); 
             if (prod is null)
             {
                 return NotFound();
-            }
+            } 
             return Ok(prod);
         }
 
@@ -41,32 +41,32 @@ namespace ProductsAPI.Controllers
         {
             if (prod is null)
             {
-                return BadRequest("Product cannot be null."); // NotFound yerine BadRequest
+                return BadRequest("Product cannot be null."); 
             }
-            _productsService.AddProduct(prod); // ProductsService ile değiştirildi
+            _productsService.AddProduct(prod); 
             return Ok();
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateProduct(int id, Products prod)
         {
-            var product = _productsService.GetProduct(id); // ProductsService ile değiştirildi
+            var product = _productsService.GetProduct(id);
             if (product is null)
                 return NotFound();
 
-            prod.Id = product.Id; // Güncellenen ürünün ID'sini ayarlıyoruz
-            _productsService.UpdateProduct(prod); // ProductsService ile değiştirildi
+            prod.Id = product.Id; 
+            _productsService.UpdateProduct(prod); 
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {
-            var product = _productsService.GetProduct(id); // ProductsService ile değiştirildi
+            var product = _productsService.GetProduct(id); 
             if (product is null)
                 return NotFound();
 
-            _productsService.DeleteProduct(id); // ProductsService ile değiştirildi
+            _productsService.DeleteProduct(id); 
             return Ok();
         }
     }
